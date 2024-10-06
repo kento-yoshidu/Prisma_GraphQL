@@ -2,7 +2,7 @@ version: "3"
 
 services:
   postgres:
-    container_name: tennis_db
+    container_name: prisma_and_graphql
     image: postgres:12-alpine
     environment:
       - POSTGRES_DB=postgres
