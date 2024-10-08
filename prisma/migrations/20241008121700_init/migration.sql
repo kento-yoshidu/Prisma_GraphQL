@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
 
@@ -9,11 +9,11 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT,
     "published" BOOLEAN NOT NULL DEFAULT false,
-    "authorId" INTEGER NOT NULL,
+    "authorId" UUID NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
