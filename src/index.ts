@@ -1,8 +1,44 @@
-import { PrismaClient } from '@prisma/client'
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema';
+import { ApolloServer } from 'apollo-server';
+import { join } from 'path';
 
-const prisma = new PrismaClient()
+const schema = loadSchemaSync(join(__dirname, './schema/schema.graphql'), {
+  loaders: [new GraphQLFileLoader()],
+});
 
+const books = [
+  {
+    title: 'The Awakening',
+    author: 'Kate Chopin',
+  },
+  {
+    title: 'City of Glass',
+    author: 'Paul Auster',
+  },
+];
+
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
+};
+
+const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
+const server = new ApolloServer({ schema: schemaWithResolvers });
+
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
+
+/*
 async function main() {
+  const user = await prisma.user.findMany()
+
+  console.log("user = ", user)
+
+  /*
   const user = await prisma.user.create({
     data: {
       name: 'Kento',
@@ -39,7 +75,6 @@ async function main() {
       authorId: 2,
     }
   })
-  */
 }
 
 main()
@@ -53,4 +88,5 @@ main()
 
     process.exit(1)
   })
+*/
 
